@@ -32,13 +32,58 @@ var _lodash = _interopRequireDefault(require("lodash.isequal"));
 
 var _react = _interopRequireDefault(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly)
+      symbols = symbols.filter(function(sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+    keys.push.apply(keys, symbols);
+  }
+  return keys;
+}
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function(key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function(key) {
+        Object.defineProperty(
+          target,
+          key,
+          Object.getOwnPropertyDescriptor(source, key)
+        );
+      });
+    }
+  }
+  return target;
+}
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
 
 var isProduction = process.env.NODE_ENV === "production";
 var DEBUG = false;
@@ -49,13 +94,13 @@ var DEBUG = false;
  * @return {Number}       Bottom coordinate.
  */
 
-function bottom(layout
-/*: Layout*/
-)
-/*: number*/
-{
+function bottom(
+  layout
+  /*: Layout*/
+) {
+  /*: number*/
   var max = 0,
-      bottomY;
+    bottomY;
 
   for (var i = 0, len = layout.length; i < len; i++) {
     bottomY = layout[i].y + layout[i].h;
@@ -65,11 +110,11 @@ function bottom(layout
   return max;
 }
 
-function cloneLayout(layout
-/*: Layout*/
-)
-/*: Layout*/
-{
+function cloneLayout(
+  layout
+  /*: Layout*/
+) {
+  /*: Layout*/
   var newLayout = Array(layout.length);
 
   for (var i = 0, len = layout.length; i < len; i++) {
@@ -79,12 +124,11 @@ function cloneLayout(layout
   return newLayout;
 } // Fast path to cloning, since this is monomorphic
 
-
-function cloneLayoutItem(layoutItem
-/*: LayoutItem*/
-)
-/*: LayoutItem*/
-{
+function cloneLayoutItem(
+  layoutItem
+  /*: LayoutItem*/
+) {
+  /*: LayoutItem*/
   return {
     w: layoutItem.w,
     h: layoutItem.h,
@@ -107,32 +151,33 @@ function cloneLayoutItem(layoutItem
  * This will catch differences in keys, order, and length.
  */
 
-
-function childrenEqual(a
-/*: ReactChildren*/
-, b
-/*: ReactChildren*/
-)
-/*: boolean*/
-{
-  return (0, _lodash.default)(_react.default.Children.map(a, function (c) {
-    return c.key;
-  }), _react.default.Children.map(b, function (c) {
-    return c.key;
-  }));
+function childrenEqual(
+  a,
+  /*: ReactChildren*/
+  b
+  /*: ReactChildren*/
+) {
+  /*: boolean*/
+  return (0, _lodash.default)(
+    _react.default.Children.map(a, function(c) {
+      return c.key;
+    }),
+    _react.default.Children.map(b, function(c) {
+      return c.key;
+    })
+  );
 }
 /**
  * Given two layoutitems, check if they collide.
  */
 
-
-function collides(l1
-/*: LayoutItem*/
-, l2
-/*: LayoutItem*/
-)
-/*: boolean*/
-{
+function collides(
+  l1,
+  /*: LayoutItem*/
+  l2
+  /*: LayoutItem*/
+) {
+  /*: boolean*/
   if (l1.i === l2.i) return false; // same element
 
   if (l1.x + l1.w <= l2.x) return false; // l1 is left of l2
@@ -155,16 +200,15 @@ function collides(l1
  * @return {Array}       Compacted Layout.
  */
 
-
-function compact(layout
-/*: Layout*/
-, compactType
-/*: CompactType*/
-, cols
-/*: number*/
-)
-/*: Layout*/
-{
+function compact(
+  layout,
+  /*: Layout*/
+  compactType,
+  /*: CompactType*/
+  cols
+  /*: number*/
+) {
+  /*: Layout*/
   // Statics go in the compareWith array right away so items flow around them.
   var compareWith = getStatics(layout); // We go through the items by row and column.
 
@@ -182,7 +226,6 @@ function compact(layout
       compareWith.push(l);
     } // Add to output array to make sure they still come out in the right order.
 
-
     out[layout.indexOf(sorted[i])] = l; // Clear moved flag, if it exists.
 
     l.moved = false;
@@ -199,20 +242,23 @@ var heightWidth = {
  * Before moving item down, it will check if the movement will cause collisions and move those items down before.
  */
 
-function resolveCompactionCollision(layout
-/*: Layout*/
-, item
-/*: LayoutItem*/
-, moveToCoord
-/*: number*/
-, axis
-/*: "x" | "y"*/
+function resolveCompactionCollision(
+  layout,
+  /*: Layout*/
+  item,
+  /*: LayoutItem*/
+  moveToCoord,
+  /*: number*/
+  axis
+  /*: "x" | "y"*/
 ) {
   var sizeProp = heightWidth[axis];
   item[axis] += 1;
-  var itemIndex = layout.map(function (layoutItem) {
-    return layoutItem.i;
-  }).indexOf(item.i); // Go through each item we collide with.
+  var itemIndex = layout
+    .map(function(layoutItem) {
+      return layoutItem.i;
+    })
+    .indexOf(item.i); // Go through each item we collide with.
 
   for (var i = itemIndex + 1; i < layout.length; i++) {
     var otherItem = layout[i]; // Ignore static items
@@ -223,7 +269,12 @@ function resolveCompactionCollision(layout
     if (otherItem.y > item.y + item.h) break;
 
     if (collides(item, otherItem)) {
-      resolveCompactionCollision(layout, otherItem, moveToCoord + item[sizeProp], axis);
+      resolveCompactionCollision(
+        layout,
+        otherItem,
+        moveToCoord + item[sizeProp],
+        axis
+      );
     }
   }
 
@@ -233,20 +284,19 @@ function resolveCompactionCollision(layout
  * Compact an item in the layout.
  */
 
-
-function compactItem(compareWith
-/*: Layout*/
-, l
-/*: LayoutItem*/
-, compactType
-/*: CompactType*/
-, cols
-/*: number*/
-, fullLayout
-/*: Layout*/
-)
-/*: LayoutItem*/
-{
+function compactItem(
+  compareWith,
+  /*: Layout*/
+  l,
+  /*: LayoutItem*/
+  compactType,
+  /*: CompactType*/
+  cols,
+  /*: number*/
+  fullLayout
+  /*: Layout*/
+) {
+  /*: LayoutItem*/
   var compactV = compactType === "vertical";
   var compactH = compactType === "horizontal";
 
@@ -267,16 +317,14 @@ function compactItem(compareWith
     }
   } // Move it down, and keep moving it down if it's colliding.
 
-
   var collides;
 
-  while (collides = getFirstCollision(compareWith, l)) {
+  while ((collides = getFirstCollision(compareWith, l))) {
     if (compactH) {
       resolveCompactionCollision(fullLayout, l, collides.x + collides.w, "x");
     } else {
       resolveCompactionCollision(fullLayout, l, collides.y + collides.h, "y");
     } // Since we can't grow without bounds horizontally, if we've overflown, let's move it down and try again.
-
 
     if (compactH && l.x + l.w > cols) {
       l.x = cols - l.w;
@@ -293,14 +341,13 @@ function compactItem(compareWith
  * @param  {Number} bounds Number of columns.
  */
 
-
-function correctBounds(layout
-/*: Layout*/
-, bounds
-/*: { cols: number }*/
-)
-/*: Layout*/
-{
+function correctBounds(
+  layout,
+  /*: Layout*/
+  bounds
+  /*: { cols: number }*/
+) {
+  /*: Layout*/
   var collidesWith = getStatics(layout);
 
   for (var i = 0, len = layout.length; i < len; i++) {
@@ -313,7 +360,8 @@ function correctBounds(layout
       l.w = bounds.cols;
     }
 
-    if (!l.static) collidesWith.push(l);else {
+    if (!l.static) collidesWith.push(l);
+    else {
       // If this is static and collides with other statics, we must move it down.
       // We have to do something nicer than just letting them overlap.
       while (getFirstCollision(collidesWith, l)) {
@@ -332,14 +380,13 @@ function correctBounds(layout
  * @return {LayoutItem}    Item at ID.
  */
 
-
-function getLayoutItem(layout
-/*: Layout*/
-, id
-/*: string*/
-)
-/*: ?LayoutItem*/
-{
+function getLayoutItem(
+  layout,
+  /*: Layout*/
+  id
+  /*: string*/
+) {
+  /*: ?LayoutItem*/
   for (var i = 0, len = layout.length; i < len; i++) {
     if (layout[i].i === id) return layout[i];
   }
@@ -353,27 +400,26 @@ function getLayoutItem(layout
  * @return {Object|undefined}  A colliding layout item, or undefined.
  */
 
-
-function getFirstCollision(layout
-/*: Layout*/
-, layoutItem
-/*: LayoutItem*/
-)
-/*: ?LayoutItem*/
-{
+function getFirstCollision(
+  layout,
+  /*: Layout*/
+  layoutItem
+  /*: LayoutItem*/
+) {
+  /*: ?LayoutItem*/
   for (var i = 0, len = layout.length; i < len; i++) {
     if (collides(layout[i], layoutItem)) return layout[i];
   }
 }
 
-function getAllCollisions(layout
-/*: Layout*/
-, layoutItem
-/*: LayoutItem*/
-)
-/*: Array<LayoutItem>*/
-{
-  return layout.filter(function (l) {
+function getAllCollisions(
+  layout,
+  /*: Layout*/
+  layoutItem
+  /*: LayoutItem*/
+) {
+  /*: Array<LayoutItem>*/
+  return layout.filter(function(l) {
     return collides(l, layoutItem);
   });
 }
@@ -383,13 +429,12 @@ function getAllCollisions(layout
  * @return {Array}        Array of static layout items..
  */
 
-
-function getStatics(layout
-/*: Layout*/
-)
-/*: Array<LayoutItem>*/
-{
-  return layout.filter(function (l) {
+function getStatics(
+  layout
+  /*: Layout*/
+) {
+  /*: Array<LayoutItem>*/
+  return layout.filter(function(l) {
     return l.static;
   });
 }
@@ -402,32 +447,38 @@ function getStatics(layout
  * @param  {Number}     [y]               Y position in grid units.
  */
 
-
-function moveElement(layout
-/*: Layout*/
-, l
-/*: LayoutItem*/
-, x
-/*: ?number*/
-, y
-/*: ?number*/
-, isUserAction
-/*: ?boolean*/
-, preventCollision
-/*: ?boolean*/
-, compactType
-/*: CompactType*/
-, cols
-/*: number*/
-)
-/*: Layout*/
-{
+function moveElement(
+  layout,
+  /*: Layout*/
+  l,
+  /*: LayoutItem*/
+  x,
+  /*: ?number*/
+  y,
+  /*: ?number*/
+  isUserAction,
+  /*: ?boolean*/
+  preventCollision,
+  /*: ?boolean*/
+  compactType,
+  /*: CompactType*/
+  cols
+  /*: number*/
+) {
+  /*: Layout*/
   // If this is static and not explicitly enabled as draggable,
   // no move is possible, so we can short-circuit this immediately.
   if (l.static && l.isDraggable !== true) return layout; // Short-circuit if nothing to do.
 
   if (l.y === y && l.x === x) return layout;
-  log("Moving element ".concat(l.i, " to [").concat(String(x), ",").concat(String(y), "] from [").concat(l.x, ",").concat(l.y, "]"));
+  log(
+    "Moving element "
+      .concat(l.i, " to [")
+      .concat(String(x), ",")
+      .concat(String(y), "] from [")
+      .concat(l.x, ",")
+      .concat(l.y, "]")
+  );
   var oldX = l.x;
   var oldY = l.y; // This is quite a bit faster than extending the object
 
@@ -439,7 +490,12 @@ function moveElement(layout
   // nearest collision.
 
   var sorted = sortLayoutItems(layout, compactType);
-  var movingUp = compactType === "vertical" && typeof y === "number" ? oldY >= y : compactType === "horizontal" && typeof x === "number" ? oldX >= x : false;
+  var movingUp =
+    compactType === "vertical" && typeof y === "number"
+      ? oldY >= y
+      : compactType === "horizontal" && typeof x === "number"
+      ? oldX >= x
+      : false;
   if (movingUp) sorted = sorted.reverse();
   var collisions = getAllCollisions(sorted, l); // There was a collision; abort
 
@@ -451,17 +507,38 @@ function moveElement(layout
     return layout;
   } // Move each item that collides away from this element.
 
-
   for (var i = 0, len = collisions.length; i < len; i++) {
     var collision = collisions[i];
-    log("Resolving collision between ".concat(l.i, " at [").concat(l.x, ",").concat(l.y, "] and ").concat(collision.i, " at [").concat(collision.x, ",").concat(collision.y, "]")); // Short circuit so we can't infinite loop
+    log(
+      "Resolving collision between "
+        .concat(l.i, " at [")
+        .concat(l.x, ",")
+        .concat(l.y, "] and ")
+        .concat(collision.i, " at [")
+        .concat(collision.x, ",")
+        .concat(collision.y, "]")
+    ); // Short circuit so we can't infinite loop
 
     if (collision.moved) continue; // Don't move static items - we have to move *this* element away
 
     if (collision.static) {
-      layout = moveElementAwayFromCollision(layout, collision, l, isUserAction, compactType, cols);
+      layout = moveElementAwayFromCollision(
+        layout,
+        collision,
+        l,
+        isUserAction,
+        compactType,
+        cols
+      );
     } else {
-      layout = moveElementAwayFromCollision(layout, l, collision, isUserAction, compactType, cols);
+      layout = moveElementAwayFromCollision(
+        layout,
+        l,
+        collision,
+        isUserAction,
+        compactType,
+        cols
+      );
     }
   }
 
@@ -476,22 +553,21 @@ function moveElement(layout
  * @param  {LayoutItem} itemToMove   Layout item we're moving.
  */
 
-
-function moveElementAwayFromCollision(layout
-/*: Layout*/
-, collidesWith
-/*: LayoutItem*/
-, itemToMove
-/*: LayoutItem*/
-, isUserAction
-/*: ?boolean*/
-, compactType
-/*: CompactType*/
-, cols
-/*: number*/
-)
-/*: Layout*/
-{
+function moveElementAwayFromCollision(
+  layout,
+  /*: Layout*/
+  collidesWith,
+  /*: LayoutItem*/
+  itemToMove,
+  /*: LayoutItem*/
+  isUserAction,
+  /*: ?boolean*/
+  compactType,
+  /*: CompactType*/
+  cols
+  /*: number*/
+) {
+  /*: Layout*/
   var compactH = compactType === "horizontal"; // Compact vertically if not set to horizontal
 
   var compactV = compactType !== "horizontal";
@@ -504,23 +580,46 @@ function moveElementAwayFromCollision(layout
     // Reset isUserAction flag because we're not in the main collision anymore.
     isUserAction = false; // Make a mock item so we don't modify the item here, only modify in moveElement.
 
-    var fakeItem
-    /*: LayoutItem*/
-    = {
-      x: compactH ? Math.max(collidesWith.x - itemToMove.w, 0) : itemToMove.x,
-      y: compactV ? Math.max(collidesWith.y - itemToMove.h, 0) : itemToMove.y,
-      w: itemToMove.w,
-      h: itemToMove.h,
-      i: "-1"
-    }; // No collision? If so, we can go up there; otherwise, we'll end up moving down as normal
+    var fakeItem =
+      /*: LayoutItem*/
+      {
+        x: compactH ? Math.max(collidesWith.x - itemToMove.w, 0) : itemToMove.x,
+        y: compactV ? Math.max(collidesWith.y - itemToMove.h, 0) : itemToMove.y,
+        w: itemToMove.w,
+        h: itemToMove.h,
+        i: "-1"
+      }; // No collision? If so, we can go up there; otherwise, we'll end up moving down as normal
 
     if (!getFirstCollision(layout, fakeItem)) {
-      log("Doing reverse collision on ".concat(itemToMove.i, " up to [").concat(fakeItem.x, ",").concat(fakeItem.y, "]."));
-      return moveElement(layout, itemToMove, compactH ? fakeItem.x : undefined, compactV ? fakeItem.y : undefined, isUserAction, preventCollision, compactType, cols);
+      log(
+        "Doing reverse collision on "
+          .concat(itemToMove.i, " up to [")
+          .concat(fakeItem.x, ",")
+          .concat(fakeItem.y, "].")
+      );
+      return moveElement(
+        layout,
+        itemToMove,
+        compactH ? fakeItem.x : undefined,
+        compactV ? fakeItem.y : undefined,
+        isUserAction,
+        preventCollision,
+        compactType,
+        cols
+      );
     }
   }
 
-  return moveElement(layout, itemToMove, compactH ? itemToMove.x + 1 : undefined, compactV ? itemToMove.y + 1 : undefined, isUserAction, preventCollision, compactType, cols);
+  return moveElement(
+    layout,
+    itemToMove,
+    compactH ? itemToMove.x + 1 : undefined,
+    compactV ? itemToMove.y + 1 : undefined,
+    isUserAction,
+    preventCollision,
+    compactType,
+    cols
+  );
 }
 /**
  * Helper to convert a number to a percentage string.
@@ -529,22 +628,20 @@ function moveElementAwayFromCollision(layout
  * @return {String}     That number as a percentage.
  */
 
-
-function perc(num
-/*: number*/
-)
-/*: string*/
-{
+function perc(
+  num
+  /*: number*/
+) {
+  /*: string*/
   return num * 100 + "%";
 }
 
-function setTransform(_ref)
-/*: Object*/
-{
+function setTransform(_ref) {
+  /*: Object*/
   var top = _ref.top,
-      left = _ref.left,
-      width = _ref.width,
-      height = _ref.height;
+    left = _ref.left,
+    width = _ref.width,
+    height = _ref.height;
   // Replace unitless items with px
   var translate = "translate(".concat(left, "px,").concat(top, "px)");
   return {
@@ -559,13 +656,12 @@ function setTransform(_ref)
   };
 }
 
-function setTopLeft(_ref2)
-/*: Object*/
-{
+function setTopLeft(_ref2) {
+  /*: Object*/
   var top = _ref2.top,
-      left = _ref2.left,
-      width = _ref2.width,
-      height = _ref2.height;
+    left = _ref2.left,
+    width = _ref2.width,
+    height = _ref2.height;
   return {
     top: "".concat(top, "px"),
     left: "".concat(left, "px"),
@@ -581,24 +677,24 @@ function setTopLeft(_ref2)
  * @return {Array}        Layout, sorted static items first.
  */
 
-
-function sortLayoutItems(layout
-/*: Layout*/
-, compactType
-/*: CompactType*/
-)
-/*: Layout*/
-{
-  if (compactType === "horizontal") return sortLayoutItemsByColRow(layout);else return sortLayoutItemsByRowCol(layout);
+function sortLayoutItems(
+  layout,
+  /*: Layout*/
+  compactType
+  /*: CompactType*/
+) {
+  /*: Layout*/
+  if (compactType === "horizontal") return sortLayoutItemsByColRow(layout);
+  else return sortLayoutItemsByRowCol(layout);
 }
 
-function sortLayoutItemsByRowCol(layout
-/*: Layout*/
-)
-/*: Layout*/
-{
-  return [].concat(layout).sort(function (a, b) {
-    if (a.y > b.y || a.y === b.y && a.x > b.x) {
+function sortLayoutItemsByRowCol(
+  layout
+  /*: Layout*/
+) {
+  /*: Layout*/
+  return [].concat(layout).sort(function(a, b) {
+    if (a.y > b.y || (a.y === b.y && a.x > b.x)) {
       return 1;
     } else if (a.y === b.y && a.x === b.x) {
       // Without this, we can get different sort results in IE vs. Chrome/FF
@@ -609,13 +705,13 @@ function sortLayoutItemsByRowCol(layout
   });
 }
 
-function sortLayoutItemsByColRow(layout
-/*: Layout*/
-)
-/*: Layout*/
-{
-  return [].concat(layout).sort(function (a, b) {
-    if (a.x > b.x || a.x === b.x && a.y > b.y) {
+function sortLayoutItemsByColRow(
+  layout
+  /*: Layout*/
+) {
+  /*: Layout*/
+  return [].concat(layout).sort(function(a, b) {
+    if (a.x > b.x || (a.x === b.x && a.y > b.y)) {
       return 1;
     }
 
@@ -632,28 +728,28 @@ function sortLayoutItemsByColRow(layout
  * @return {Array}                Working layout.
  */
 
-
-function synchronizeLayoutWithChildren(initialLayout
-/*: Layout*/
-, children
-/*: ReactChildren*/
-, cols
-/*: number*/
-, compactType
-/*: CompactType*/
-)
-/*: Layout*/
-{
+function synchronizeLayoutWithChildren(
+  initialLayout,
+  /*: Layout*/
+  children,
+  /*: ReactChildren*/
+  cols,
+  /*: number*/
+  compactType
+  /*: CompactType*/
+) {
+  /*: Layout*/
   initialLayout = initialLayout || []; // Generate one layout item per child.
 
-  var layout
-  /*: Layout*/
-  = [];
+  var layout =
+    /*: Layout*/
+    [];
 
-  _react.default.Children.forEach(children, function (child
-  /*: ReactElement<any>*/
-  , i
-  /*: number*/
+  _react.default.Children.forEach(children, function(
+    child,
+    /*: ReactElement<any>*/
+    i
+    /*: number*/
   ) {
     // Don't overwrite if it already exists.
     var exists = getLayoutItem(initialLayout, String(child.key));
@@ -662,8 +758,10 @@ function synchronizeLayoutWithChildren(initialLayout
       layout[i] = cloneLayoutItem(exists);
     } else {
       if (!isProduction && child.props._grid) {
-        console.warn("`_grid` properties on children have been deprecated as of React 15.2. " + // eslint-disable-line
-        "Please use `data-grid` or add your properties directly to the `layout`.");
+        console.warn(
+          "`_grid` properties on children have been deprecated as of React 15.2. " + // eslint-disable-line
+            "Please use `data-grid` or add your properties directly to the `layout`."
+        );
       }
 
       var g = child.props["data-grid"] || child.props._grid; // Hey, this item has a data-grid property, use it.
@@ -673,9 +771,11 @@ function synchronizeLayoutWithChildren(initialLayout
           validateLayout([g], "ReactGridLayout.children");
         }
 
-        layout[i] = cloneLayoutItem(_objectSpread({}, g, {
-          i: child.key
-        }));
+        layout[i] = cloneLayoutItem(
+          _objectSpread({}, g, {
+            i: child.key
+          })
+        );
       } else {
         // Nothing provided: ensure this is added to the bottom
         layout[i] = cloneLayoutItem({
@@ -688,7 +788,6 @@ function synchronizeLayoutWithChildren(initialLayout
       }
     }
   }); // Correct the layout.
-
 
   layout = correctBounds(layout, {
     cols: cols
@@ -704,47 +803,64 @@ function synchronizeLayoutWithChildren(initialLayout
  * @throw  {Error}                Validation error.
  */
 
-
-function validateLayout(layout
-/*: Layout*/
-)
-/*: void*/
-{
-  var contextName
-  /*: string*/
-  = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Layout";
+function validateLayout(
+  layout
+  /*: Layout*/
+) {
+  /*: void*/
+  var contextName =
+    /*: string*/
+    arguments.length > 1 && arguments[1] !== undefined
+      ? arguments[1]
+      : "Layout";
   var subProps = ["x", "y", "w", "h"];
-  if (!Array.isArray(layout)) throw new Error(contextName + " must be an array!");
+  if (!Array.isArray(layout))
+    throw new Error(contextName + " must be an array!");
 
   for (var i = 0, len = layout.length; i < len; i++) {
     var item = layout[i];
 
     for (var j = 0; j < subProps.length; j++) {
       if (typeof item[subProps[j]] !== "number") {
-        throw new Error("ReactGridLayout: " + contextName + "[" + i + "]." + subProps[j] + " must be a number!");
+        throw new Error(
+          "ReactGridLayout: " +
+            contextName +
+            "[" +
+            i +
+            "]." +
+            subProps[j] +
+            " must be a number!"
+        );
       }
     }
 
     if (item.i && typeof item.i !== "string") {
-      throw new Error("ReactGridLayout: " + contextName + "[" + i + "].i must be a string!");
+      throw new Error(
+        "ReactGridLayout: " + contextName + "[" + i + "].i must be a string!"
+      );
     }
 
     if (item.static !== undefined && typeof item.static !== "boolean") {
-      throw new Error("ReactGridLayout: " + contextName + "[" + i + "].static must be a boolean!");
+      throw new Error(
+        "ReactGridLayout: " +
+          contextName +
+          "[" +
+          i +
+          "].static must be a boolean!"
+      );
     }
   }
 } // Flow can't really figure this out, so we just use Object
 
-
-function autoBindHandlers(el
-/*: Object*/
-, fns
-/*: Array<string>*/
-)
-/*: void*/
-{
-  fns.forEach(function (key) {
-    return el[key] = el[key].bind(el);
+function autoBindHandlers(
+  el,
+  /*: Object*/
+  fns
+  /*: Array<string>*/
+) {
+  /*: void*/
+  fns.forEach(function(key) {
+    return (el[key] = el[key].bind(el));
   });
 }
 
