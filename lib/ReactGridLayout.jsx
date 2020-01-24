@@ -275,7 +275,7 @@ export default class ReactGridLayout extends React.Component<Props, State> {
       h: 1,
       w: 1
     },
-    enableUserSelectHack: true,
+    enableUserSelectHack: false,
     onLayoutChange: noop,
     onDragStart: noop,
     onDrag: noop,

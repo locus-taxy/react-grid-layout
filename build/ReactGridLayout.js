@@ -1121,7 +1121,7 @@ _defineProperty(ReactGridLayout, "defaultProps", {
     h: 1,
     w: 1
   },
-  enableUserSelectHack: true,
+  enableUserSelectHack: false,
   onLayoutChange: _utils.noop,
   onDragStart: _utils.noop,
   onDrag: _utils.noop,
