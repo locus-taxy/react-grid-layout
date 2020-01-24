@@ -167,7 +167,7 @@ export default class GridItem extends React.Component<Props, State> {
     maxH: Infinity,
     maxW: Infinity,
     transformScale: 1,
-    enableUserSelectHack: true
+    enableUserSelectHack: false
   };
 
   state: State = {

@@ -691,5 +691,5 @@ _defineProperty(GridItem, "defaultProps", {
   maxH: Infinity,
   maxW: Infinity,
   transformScale: 1,
-  enableUserSelectHack: true
+  enableUserSelectHack: false
 });
