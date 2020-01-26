@@ -573,7 +573,8 @@ function (_React$Component) {
           useCSSTransforms = _this$props5.useCSSTransforms,
           transformScale = _this$props5.transformScale,
           draggableCancel = _this$props5.draggableCancel,
-          draggableHandle = _this$props5.draggableHandle;
+          draggableHandle = _this$props5.draggableHandle,
+          enableUserSelectHack = _this$props5.enableUserSelectHack;
       var _this$state3 = this.state,
           mounted = _this$state3.mounted,
           droppingPosition = _this$state3.droppingPosition; // Determine user manipulations possible.
@@ -612,7 +613,8 @@ function (_React$Component) {
         maxH: l.maxH,
         maxW: l.maxW,
         static: l.static,
-        droppingPosition: isDroppingItem ? droppingPosition : undefined
+        droppingPosition: isDroppingItem ? droppingPosition : undefined,
+        enableUserSelectHack: enableUserSelectHack
       }, child);
     }
   }, {
@@ -834,7 +836,7 @@ _defineProperty(ReactGridLayout, "defaultProps", {
     h: 1,
     w: 1
   },
-  enableUserSelectHack: false,
+  enableUserSelectHack: true,
   onLayoutChange: _utils.noop,
   onDragStart: _utils.noop,
   onDrag: _utils.noop,
