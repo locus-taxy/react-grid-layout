@@ -381,6 +381,7 @@ export default class GridItem extends React.Component<Props, State> {
           (this.props.cancel ? "," + this.props.cancel : "")
         }
         scale={this.props.transformScale}
+        enableUserSelectHack={false}
       >
         {child}
       </DraggableCore>
